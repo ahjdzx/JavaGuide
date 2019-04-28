@@ -48,13 +48,13 @@ Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成
 
 **JDK 1.8之前：**
 
-<div align="center">  
+<div align="center">
 <img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3/JVM运行时数据区域.png" width="600px"/>
 </div>
 
 **JDK 1.8 ：**
 
-<div align="center">  
+<div align="center">
 <img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3Java运行时数据区域JDK1.8.png" width="600px"/>
 </div>
 
@@ -122,7 +122,7 @@ Java 虚拟机所管理的内存中最大的一块，Java 堆是所有线程共�
 
 Java 堆是垃圾收集器管理的主要区域，因此也被称作**GC堆（Garbage Collected Heap）**.从垃圾回收的角度，由于现在收集器基本都采用分代垃圾收集算法，所以Java堆还可以细分为：新生代和老年代：再细致一点有：Eden空间、From Survivor、To Survivor空间等。**进一步划分的目的是更好地回收内存，或者更快地分配内存。**
 
-<div align="center">  
+<div align="center">
 <img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3堆结构.png" width="400px"/>
 </div>
 
@@ -162,7 +162,7 @@ JDK 1.8 的时候，方法区（HotSpot的永久代）被彻底移除了（JDK1.
 
 #### 为什么要将永久代(PermGen)替换为元空间(MetaSpace)呢?
 
-整个永久代有一个 JVM 本身设置固定大小上线，无法进行调整，而元空间使用的是直接内存，受本机可用内存的限制，并且永远不会得到java.lang.OutOfMemoryError。你可以使用 `-XX：MaxMetaspaceSize` 标志设置最大元空间大小，默认值为 unlimited，这意味着它只受系统内存的限制。`-XX：MetaspaceSize` 调整标志定义元空间的初始大小如果未指定此标志，则 Metaspace 将根据运行时的应用程序需求动态地重新调整大小。
+整个永久代有一个 JVM 本身设置固定大小上限，无法进行调整，而元空间使用的是直接内存，受本机可用内存的限制，并且永远不会得到java.lang.OutOfMemoryError。你可以使用 `-XX：MaxMetaspaceSize` 标志设置最大元空间大小，默认值为 unlimited，这意味着它只受系统内存的限制。`-XX：MetaspaceSize` 调整标志定义元空间的初始大小如果未指定此标志，则 Metaspace 将根据运行时的应用程序需求动态地重新调整大小。
 
 当然这只是其中一个原因，还有很多底层的原因，这里就不提了。
 
@@ -172,7 +172,7 @@ JDK 1.8 的时候，方法区（HotSpot的永久代）被彻底移除了（JDK1.
 
 既然运行时常量池时方法区的一部分，自然受到方法区内存的限制，当常量池无法再申请到内存时会抛出 OutOfMemoryError 异常。
 
-**JDK1.7及之后版本的 JVM 已经将运行时常量池从方法区中移了出来，在 Java 堆（Heap）中开辟了一块区域存放运行时常量池。** 
+**JDK1.7及之后版本的 JVM 已经将运行时常量池从方法区中移了出来，在 Java 堆（Heap）中开辟了一块区域存放运行时常量池。**
 
 ![](http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-14/26038433.jpg)
 ——图片来源：https://blog.csdn.net/wangbiao007/article/details/78545189
@@ -196,7 +196,7 @@ JDK1.4 中新加入的 **NIO(New Input/Output) 类**，引入了一种基于**�
 
 **①类加载检查：** 虚拟机遇到一条 new 指令时，首先将去检查这个指令的参数是否能在常量池中定位到这个类的符号引用，并且检查这个符号引用代表的类是否已被加载过、解析和初始化过。如果没有，那必须先执行相应的类加载过程。
 
-**②分配内存：** 在**类加载检查**通过后，接下来虚拟机将为新生对象**分配内存**。对象所需的内存大小在类加载完成后便可确定，为对象分配空间的任务等同于把一块确定大小的内存从 Java 堆中划分出来。**分配方式**有 **“指针碰撞”** 和 **“空闲列表”** 两种，**选择那种分配方式由 Java 堆是否规整决定，而Java堆是否规整又由所采用的垃圾收集器是否带有压缩整理功能决定**。
+**②分配内存：** 在**类加载检查**通过后，接下来虚拟机将为新生对象**分配内存**。对象所需的内存大小在类加载完成后便可确定，为对象分配空间的任务等同于把一块确定大小的内存从 Java 堆中划分出来。**分配方式**有 **“指针碰撞”** 和 **“空闲列表”** 两种，**选择哪种分配方式由 Java 堆是否规整决定，而Java堆是否规整又由所采用的垃圾收集器是否带有压缩整理功能决定**。
 
 
 **内存分配的两种方式：（补充内容，需要掌握）**
@@ -289,9 +289,9 @@ System.out.println(str2==str3);//false
 ```java
 		  String str1 = "str";
 		  String str2 = "ing";
-		  
+
 		  String str3 = "str" + "ing";//常量池中的对象
-		  String str4 = str1 + str2; //在堆上创建的新的对象	  
+		  String str4 = str1 + str2; //在堆上创建的新的对象
 		  String str5 = "string";//常量池中的对象
 		  System.out.println(str3 == str4);//false
 		  System.out.println(str3 == str5);//true
@@ -337,7 +337,7 @@ true
 		System.out.println(i3 == i4);// 输出false
 ```
 
-**Integer 缓存源代码：** 
+**Integer 缓存源代码：**
 
 ```java
 /**
@@ -369,13 +369,13 @@ true
   Integer i4 = new Integer(40);
   Integer i5 = new Integer(40);
   Integer i6 = new Integer(0);
-  
+
   System.out.println("i1=i2   " + (i1 == i2));
   System.out.println("i1=i2+i3   " + (i1 == i2 + i3));
   System.out.println("i1=i4   " + (i1 == i4));
   System.out.println("i4=i5   " + (i4 == i5));
-  System.out.println("i4=i5+i6   " + (i4 == i5 + i6));   
-  System.out.println("40=i5+i6   " + (40 == i5 + i6));     
+  System.out.println("i4=i5+i6   " + (i4 == i5 + i6));
+  System.out.println("40=i5+i6   " + (40 == i5 + i6));
 ```
 
 结果：
@@ -401,8 +401,3 @@ i4=i5+i6   true
 - <http://www.pointsoftware.ch/en/under-the-hood-runtime-data-areas-javas-memory-model/>
 - <https://dzone.com/articles/jvm-permgen-%E2%80%93-where-art-thou>
 - <https://stackoverflow.com/questions/9095748/method-area-and-permgen>
-
-
-
-
-
